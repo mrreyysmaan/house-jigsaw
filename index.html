@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jigsaw Puzzle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SETUP SCREEN ===== -->
+  <div id="setup-screen" class="screen active">
+    <div class="setup-container">
+
+      <div class="setup-header">
+        <div class="setup-title-row">
+          <span class="setup-logo">🧩</span>
+          <h1>Jigsaw Puzzle</h1>
+        </div>
+        <p>Configure your puzzle session below, then hit Start!</p>
+      </div>
+
+      <div class="setup-grid">
+
+        <!-- Difficulty -->
+        <div class="setup-card">
+          <h2 class="card-title">Difficulty</h2>
+          <div class="diff-group">
+            <button class="diff-btn" data-diff="easy">
+              <span class="diff-emoji">😊</span>
+              <span class="diff-name">Easy</span>
+              <span class="diff-desc">3 × 3 — 9 pieces</span>
+            </button>
+            <button class="diff-btn active" data-diff="medium">
+              <span class="diff-emoji">🤔</span>
+              <span class="diff-name">Medium</span>
+              <span class="diff-desc">4 × 4 — 16 pieces</span>
+            </button>
+            <button class="diff-btn" data-diff="hard">
+              <span class="diff-emoji">🔥</span>
+              <span class="diff-name">Hard</span>
+              <span class="diff-desc">6 × 6 — 36 pieces</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Timer -->
+        <div class="setup-card">
+          <h2 class="card-title">Timer</h2>
+          <div class="timer-row">
+            <input type="number" id="timer-input" min="0" max="3600" value="120">
+            <span class="timer-label">seconds per puzzle</span>
+          </div>
+          <p class="hint">Set to 0 for no timer</p>
+        </div>
+
+        <!-- Order -->
+        <div class="setup-card">
+          <h2 class="card-title">Order</h2>
+          <label class="toggle-wrap">
+            <input type="checkbox" id="randomize-toggle">
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+            <span class="toggle-text">Randomise order</span>
+          </label>
+          <p class="hint">Off = same order as uploaded</p>
+        </div>
+
+      </div><!-- /setup-grid -->
+
+      <!-- Images -->
+      <div class="setup-card wide">
+        <h2 class="card-title">
+          Images
+          <span class="badge" id="image-count">0 / 10</span>
+        </h2>
+
+        <div id="upload-area" class="upload-area">
+          <div class="upload-icon">📂</div>
+          <p class="upload-text">Drag & drop images here, or <span class="upload-link">click to browse</span></p>
+          <p class="hint">JPEG · PNG · GIF &nbsp;·&nbsp; Up to 10 images</p>
+          <input type="file" id="file-input" accept="image/*" multiple hidden>
+        </div>
+
+        <div id="image-list" class="image-list"></div>
+      </div>
+
+      <button id="start-btn" class="start-btn" disabled>🚀 Start Puzzle</button>
+
+    </div>
+  </div><!-- /setup-screen -->
+
+
+  <!-- ===== PUZZLE SCREEN ===== -->
+  <div id="puzzle-screen" class="screen">
+    <div class="puzzle-header">
+      <div class="ph-left">
+        <span id="puzzle-number" class="ph-number">Puzzle 1 of 1</span>
+        <span id="puzzle-name" class="ph-name"></span>
+      </div>
+      <div class="ph-center">
+        <div class="pieces-pill">
+          <span id="pieces-placed">0</span>/<span id="pieces-total">0</span>
+          <span class="pieces-label">pieces</span>
+        </div>
+        <div id="timer-display" class="timer-pill">
+          <span class="timer-icon">⏱</span>
+          <span id="timer-value">0:00</span>
+        </div>
+      </div>
+      <div class="ph-right">
+        <span class="rotate-hint">Right-click or double-tap a piece to rotate</span>
+      </div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="puzzle-canvas"></canvas>
+      <canvas id="confetti-canvas"></canvas>
+    </div>
+  </div><!-- /puzzle-screen -->
+
+
+  <!-- ===== TIMEOUT OVERLAY ===== -->
+  <div id="timeout-overlay" class="overlay hidden">
+    <div class="overlay-box">
+      <div class="ov-icon">⏰</div>
+      <h2>Time's Up!</h2>
+      <p>Here's what the completed picture looks like.</p>
+    </div>
+  </div>
+
+
+  <!-- ===== COMPLETION OVERLAY ===== -->
+  <div id="completion-overlay" class="overlay hidden">
+    <div class="overlay-box">
+      <div class="ov-icon">🎉</div>
+      <h2>Well Done!</h2>
+      <p id="completion-desc" class="comp-desc"></p>
+      <button id="next-btn" class="btn-primary">Next Puzzle →</button>
+    </div>
+  </div>
+
+
+  <!-- ===== SUMMARY SCREEN ===== -->
+  <div id="summary-screen" class="screen">
+    <div class="summary-container">
+      <div class="summary-header">
+        <div class="summary-trophy">🏆</div>
+        <h1>Session Complete!</h1>
+        <p id="summary-subtitle"></p>
+      </div>
+
+      <div id="summary-results" class="summary-results"></div>
+
+      <div class="summary-actions">
+        <button id="restart-btn" class="btn-secondary">🔄 Restart</button>
+        <button id="menu-btn" class="btn-primary">🏠 Main Menu</button>
+      </div>
+    </div>
+  </div><!-- /summary-screen -->
+
+  <script src="game.js"></script>
+</body>
+</html>
